@@ -1,25 +1,39 @@
 import logo from './logo.svg';
 import './App.css';
-import { Amplify } from 'aws-amplify';
+import {Amplify, Auth, PubSub} from 'aws-amplify';
+import { AWSIoTProvider } from '@aws-amplify/pubsub';
+
 import config from './aws-exports';
 import "@aws-amplify/ui-react/styles.css";
 import {
-  withAuthenticator,
-  Button,
-  Heading,
-  Image,
-  View,
-  Card,
+    withAuthenticator,
+    Button,
+    Heading,
+    Image,
+    View,
+    Card, Text,
 } from "@aws-amplify/ui-react";
 
 Amplify.configure(config);
+Amplify.addPluggable(
+    new AWSIoTProvider({
+        aws_pubsub_region: 'eu-west-1',
+        aws_pubsub_endpoint:
+            'wss://arvb6j5c7prz6-ats.iot.eu-west-1.amazonaws.com/mqtt'
+    })
+);
 
+Auth.currentCredentials().then((info) => {
+    const cognitoIdentityId = info.identityId;
+    console.log('cognitoIdentityID is')
+    console.log(cognitoIdentityId)
+});
 
 function App() {
   return (
       <View className="App">
         <Card>
-          <Image alt="logo" src={logo} />
+          <Image alt="logo" src={logo} height="10%" width="10%"/>
           <Heading level={1}>Power Electronics IoT2050 Dashboard</Heading>
         </Card>
         <Card>
