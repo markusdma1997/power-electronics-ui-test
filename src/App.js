@@ -45,23 +45,26 @@ async function getCognitoIdentityId() {
 
 function App({ signOut, user }) {
   return (
-      <View className="App">
-        <Card>
-          <Image alt="logo" src={logo} height="10%" width="10%"/>
-          <Heading level={1}>Power Electronics IoT2050 Dashboard</Heading>
-        </Card>
-        <Card>
-          <iframe
-              title="IoT2050 UDP"
-              src="http://localhost:3000/d-solo/e9c0307e-2873-4cc4-9a74-1347e5bee177/powerelectronics?orgId=1&refresh=5s&from=1687517021785&to=1687517321786&panelId=2"
-              width="450"
-              height="200"
-              frameBorder="0">
-          </iframe>
-        </Card>
-        <button onClick={signOut}>Sign out</button>
-        <button onClick={getCognitoIdentityId}>Get current user cognito identity id</button>
-      </View>
+      <headers>
+          <frame-options policy="SAMEORIGIN"/>
+          <View className="App">
+              <Card>
+                  <Image alt="logo" src={logo} height="10%" width="10%"/>
+                  <Heading level={1}>Power Electronics IoT2050 Dashboard</Heading>
+              </Card>
+              <Card>
+                  <iframe
+                      title="IoT2050 UDP"
+                      src="http://localhost:3000/d-solo/e9c0307e-2873-4cc4-9a74-1347e5bee177/powerelectronics?orgId=1&refresh=5s&from=1687517021785&to=1687517321786&panelId=2"
+                      width="450"
+                      height="200"
+                      frameBorder="0">
+                  </iframe>
+              </Card>
+              <button onClick={signOut}>Sign out</button>
+              <button onClick={getCognitoIdentityId}>Get current user cognito identity id</button>
+          </View>
+      </headers>
   );
 }
 
