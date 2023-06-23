@@ -1,20 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
-import { Amplify, Auth, PubSub } from 'aws-amplify';
-import { AWSIoTProvider } from '@aws-amplify/pubsub';
+import {Amplify, Auth} from 'aws-amplify';
+import {AWSIoTProvider} from '@aws-amplify/pubsub';
 import awsconfig from './aws-exports';
-import awsExports from "./aws-exports";
-
-import config from './aws-exports';
 import "@aws-amplify/ui-react/styles.css";
-import {
-    withAuthenticator,
-    Button,
-    Heading,
-    Image,
-    View,
-    Card, Text,
-} from "@aws-amplify/ui-react";
+import {Card, Heading, Image, View, withAuthenticator,} from "@aws-amplify/ui-react";
 
 Amplify.configure(awsconfig);
 Amplify.addPluggable(
@@ -24,6 +14,33 @@ Amplify.addPluggable(
             'wss://arvb6j5c7prz6-ats.iot.eu-west-1.amazonaws.com/mqtt'
     })
 );
+
+async function signUp() {
+    try {
+        let username, password, email, phone_number;
+        const { user } = await Auth.signUp({
+            username,
+            password,
+            attributes: {
+                email,          // optional
+                phone_number,   // optional - E.164 number convention
+                // other custom attributes
+            },
+            autoSignIn: { // optional - enables auto sign in after user is confirmed
+                enabled: true,
+            }
+        });
+        console.log(user);
+    } catch (error) {
+        console.log('error signing up:', error);
+    }
+}
+
+async function getCognitoIdentityId() {
+    return await Auth.currentCredentials().then((info) => {
+        return info.identityId;
+    });
+}
 
 function App({ signOut, user }) {
   return (
@@ -42,6 +59,7 @@ function App({ signOut, user }) {
           </iframe>
         </Card>
         <button onClick={signOut}>Sign out</button>
+        <button onClick={getCognitoIdentityId}>Get current user cognito identity id</button>
       </View>
   );
 }
