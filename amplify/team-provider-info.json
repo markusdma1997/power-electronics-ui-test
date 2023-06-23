@@ -10,6 +10,11 @@
       "StackName": "amplify-amplifye0befaf9a6c74-staging-112853",
       "StackId": "arn:aws:cloudformation:eu-west-1:271228551235:stack/amplify-amplifye0befaf9a6c74-staging-112853/22637770-11b9-11ee-ba19-02b82fde92ad",
       "AmplifyAppId": "ddrkpzzagg0z6"
+    },
+    "categories": {
+      "auth": {
+        "powerelectronicsuite265a78de": {}
+      }
     }
   }
 }

@@ -1,7 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
-import {Amplify, Auth, PubSub} from 'aws-amplify';
+import { Amplify, Auth, PubSub } from 'aws-amplify';
 import { AWSIoTProvider } from '@aws-amplify/pubsub';
+import awsconfig from './aws-exports';
+import awsExports from "./aws-exports";
 
 import config from './aws-exports';
 import "@aws-amplify/ui-react/styles.css";
@@ -14,7 +16,7 @@ import {
     Card, Text,
 } from "@aws-amplify/ui-react";
 
-Amplify.configure(config);
+Amplify.configure(awsconfig);
 Amplify.addPluggable(
     new AWSIoTProvider({
         aws_pubsub_region: 'eu-west-1',
@@ -23,13 +25,7 @@ Amplify.addPluggable(
     })
 );
 
-Auth.currentCredentials().then((info) => {
-    const cognitoIdentityId = info.identityId;
-    console.log('cognitoIdentityID is')
-    console.log(cognitoIdentityId)
-});
-
-function App() {
+function App({ signOut, user }) {
   return (
       <View className="App">
         <Card>
@@ -45,8 +41,9 @@ function App() {
               frameBorder="0">
           </iframe>
         </Card>
+        <button onClick={signOut}>Sign out</button>
       </View>
   );
 }
 
-export default App;
+export default withAuthenticator(App);
