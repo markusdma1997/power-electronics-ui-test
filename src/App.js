@@ -37,9 +37,10 @@ async function signUp() {
 }
 
 async function getCognitoIdentityId() {
-    return await Auth.currentCredentials().then((info) => {
+    let cognitoIdentityId = await Auth.currentCredentials().then((info) => {
         return info.identityId;
     });
+    console.log(cognitoIdentityId);
 }
 
 function App({ signOut, user }) {
