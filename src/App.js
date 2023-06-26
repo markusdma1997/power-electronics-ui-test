@@ -15,8 +15,6 @@ Amplify.addPluggable(
     })
 );
 
-const helmet = require('helmet')
-
 async function signUp() {
     try {
         let username, password, email, phone_number;
@@ -66,6 +64,7 @@ const App = function ({ signOut, user }) {
                   <iframe
                       title="IoT2050 UDP"
                       src="http://localhost:3000/d-solo/e9c0307e-2873-4cc4-9a74-1347e5bee177/powerelectronics?orgId=1&refresh=5s&from=1687517021785&to=1687517321786&panelId=2"
+                      sandbox="allow-same-origin"
                       width="450"
                       height="200"
                       frameBorder="0">
@@ -80,9 +79,5 @@ const App = function ({ signOut, user }) {
       </headers>
   );
 }
-
-App.use(helmet({
-    frameguard: { action: 'sameorigin' },
-}));
 
 export default withAuthenticator(App);
