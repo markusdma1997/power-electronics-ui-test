@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import {Amplify, Auth} from 'aws-amplify';
+import {Amplify, Auth, PubSub} from 'aws-amplify';
 import {AWSIoTProvider} from '@aws-amplify/pubsub';
 import awsconfig from './aws-exports';
 import "@aws-amplify/ui-react/styles.css";
@@ -45,6 +45,14 @@ async function getCognitoIdentityId() {
     console.log(cognitoIdentityId);
 }
 
+async function pubsubCreateSubscription(topic) {
+    PubSub.subscribe(topic).subscribe({
+        next: data => console.log('Message received ', data),
+        error: error => console.log(error),
+        complete: () => console.log('Subscription done')
+    });
+}
+
 const App = function ({ signOut, user }) {
   return (
       <headers>
@@ -65,11 +73,16 @@ const App = function ({ signOut, user }) {
               </Card>
               <button onClick={signOut}>Sign out</button>
               <button onClick={getCognitoIdentityId}>Get current user cognito identity id</button>
+              <Card>
+                  <Heading level={3}>MQTT Dashboard</Heading>
+              </Card>
           </View>
       </headers>
   );
 }
 
-App.use(helmet.frameguard());
+App.use(helmet({
+    frameguard: { action: 'sameorigin' },
+}));
 
 export default withAuthenticator(App);
