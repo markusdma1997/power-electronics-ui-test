@@ -63,8 +63,7 @@ const App = function ({ signOut, user }) {
               <Card>
                   <iframe
                       title="IoT2050 UDP"
-                      src="http://127.0.0.1:3000/d-solo/e9c0307e-2873-4cc4-9a74-1347e5bee177/powerelectronics?orgId=1&refresh=5s&from=1687517021785&to=1687517321786&panelId=2"
-                      sandbox="allow-same-origin"
+                      src="http://localhost:3000/d-solo/e9c0307e-2873-4cc4-9a74-1347e5bee177/powerelectronics?orgId=1&refresh=5s&from=1687517021785&to=1687517321786&panelId=2"
                       width="450"
                       height="200"
                       frameBorder="0">
