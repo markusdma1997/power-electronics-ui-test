@@ -15,6 +15,8 @@ Amplify.addPluggable(
     })
 );
 
+const helmet = require('helmet')
+
 async function signUp() {
     try {
         let username, password, email, phone_number;
@@ -43,7 +45,7 @@ async function getCognitoIdentityId() {
     console.log(cognitoIdentityId);
 }
 
-function App({ signOut, user }) {
+const App = function ({ signOut, user }) {
   return (
       <headers>
           <frame-options policy="SAMEORIGIN"/>
@@ -67,5 +69,7 @@ function App({ signOut, user }) {
       </headers>
   );
 }
+
+App.use(helmet.frameguard());
 
 export default withAuthenticator(App);
