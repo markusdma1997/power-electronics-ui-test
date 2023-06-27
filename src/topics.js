@@ -3,15 +3,17 @@ import {Button, Card, Collection, Flex, Heading, Text, TextField} from "@aws-amp
 import * as React from "react";
 
 export default function MQTTSubscriptionTopicList() {
-    const [topicList, setTopicList] = useState([]);
+    const [topicList, setTopicList] = useState(['iot2050/greengrass/command/pause_looping']);
 
     function subscribeToTopic(topicName) {
         topicList.push(topicName);
         setTopicList(topicList);
+        console.log(topicList);
     }
 
     function unsubscribeFromTopic(topicName) {
         setTopicList(topicList.filter(t => t !== topicName));
+        console.log(topicList);
     }
 
     const newSubscriptionTopicInputRef = React.useRef(null);
