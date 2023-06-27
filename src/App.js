@@ -18,6 +18,8 @@ import {
     Button,
 } from "@aws-amplify/ui-react";
 
+import MQTTSubscriptionTopicList from "./topics";
+
 Amplify.configure(awsconfig);
 Amplify.addPluggable(
     new AWSIoTProvider({
@@ -63,29 +65,7 @@ async function pubsubCreateSubscription(topic) {
     });
 }
 
-let subscribedTopics = [];
-
 const App = function ({ signOut, user }) {
-  const newSubscriptionTopicInputRef = React.useRef(null);
-  const newSubscriptionTopicButtonRef = React.useRef(null);
-
-  const newSubscriptionTopicOnClick = React.useCallback(() => {
-      newSubscriptionTopicInputRef.current.focus();
-      subscribedTopics.push({
-          topic: `${newSubscriptionTopicInputRef.current.value}`
-      })
-  }, [])
-
-  React.useEffect(() => {
-      const newSubscriptionTopicButtonRefCurrent = newSubscriptionTopicButtonRef.current;
-      if (newSubscriptionTopicButtonRef && newSubscriptionTopicButtonRefCurrent) {
-          newSubscriptionTopicButtonRefCurrent.addEventListener('click', newSubscriptionTopicOnClick, false);
-          return () => {
-              newSubscriptionTopicButtonRefCurrent.removeEventListener('click', newSubscriptionTopicOnClick, false);
-          };
-      }
-  }, [onclick]);
-
   return (
       <headers>
           <frame-options policy="SAMEORIGIN"/>
@@ -104,41 +84,7 @@ const App = function ({ signOut, user }) {
                       frameBorder="0">
                   </iframe>
               </Card>
-              <Card>
-                  <Heading level={4}>MQTT Dashboard</Heading>
-                  <Collection
-                      items={subscribedTopics}
-                      type="list"
-                      direction="row"
-                      gap="20px"
-                      wrap="nowrap">
-                      {(item, index) => (
-                          <Card
-                              key={index}
-                              borderRadius="medium"
-                              maxWidth="20rem"
-                              variation="outlined">
-                              <Text>
-                                  item.topic
-                              </Text>
-                          </Card>
-                      )}
-                  </Collection>
-                  <Flex>
-                      <TextField
-                          variation="quiet"
-                          descriptiveText="Enter a new topic for subscription"
-                          placeholder="iot2050/greengrass/query/file_status"
-                          label="New topic subscription"
-                          ref={newSubscriptionTopicInputRef}
-                          errorMessage="Topic already subscribed"
-                      />
-                      <Button
-                          newSubscriptionTopicButtonRef={newSubscriptionTopicButtonRef}>
-                          Subscribe
-                      </Button>
-                  </Flex>
-              </Card>
+              <MQTTSubscriptionTopicList/>
               <Button onClick={signOut}>Sign out</Button>
           </View>
       </headers>
