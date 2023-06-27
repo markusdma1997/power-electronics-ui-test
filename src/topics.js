@@ -21,7 +21,7 @@ export default function MQTTSubscriptionTopicList() {
     }
 
     function unsubscribeFromTopic(unsubscribeFromTopicName) {
-        setTopicList(topicList.filter(t => t.topicName !== unsubscribeFromTopicName.item));
+        setTopicList(topicList.filter(t => t.topicName !== unsubscribeFromTopicName.item.topicName));
     }
 
     const newSubscriptionTopicInputRef = React.useRef(null);
@@ -56,8 +56,9 @@ export default function MQTTSubscriptionTopicList() {
                         key={index}
                         borderRadius="medium"
                         maxWidth="20rem"
+                        wrap="wrap"
                         variation="outlined">
-                        <Heading level={6}>
+                        <Heading level={6} >
                             {item.topicName}
                         </Heading>
                         <Text>
@@ -80,8 +81,8 @@ export default function MQTTSubscriptionTopicList() {
             />
             <Button
                 variation="primary"
-                size="small"
-                newSubscriptionTopicButtonRef={newSubscriptionTopicButtonRef}>
+                // newSubscriptionTopicButtonRef={newSubscriptionTopicButtonRef}>
+                onClick={() => subscribeToTopic(`${newSubscriptionTopicInputRef.current.value}`)}>
                 Subscribe
             </Button>
         </Card>
