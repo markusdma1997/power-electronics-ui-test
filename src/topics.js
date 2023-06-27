@@ -67,7 +67,10 @@ export default function MQTTSubscriptionTopicList() {
                     errorMessage="Topic already subscribed"
                 />
                 <Button
-                    newSubscriptionTopicButtonRef={newSubscriptionTopicButtonRef}>
+                    variation="primary"
+                    size="small"
+                    // newSubscriptionTopicButtonRef={newSubscriptionTopicButtonRef}>
+                    onClick={() => subscribeToTopic(`${newSubscriptionTopicInputRef.current.value}`)}>
                     Subscribe
                 </Button>
             </Flex>
