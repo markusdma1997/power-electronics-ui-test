@@ -1,28 +1,27 @@
 import { useState } from 'react';
-import {Button, Card, Collection, Flex, Heading, Text, TextField} from "@aws-amplify/ui-react";
+import {Button, Card, Collection, Flex, Heading, Text, TextAreaField, TextField} from "@aws-amplify/ui-react";
 import * as React from "react";
 
 export default function MQTTSubscriptionTopicList() {
-    const [topicList, setTopicList] = useState(['iot2050/greengrass/command/pause_looping']);
+    const [topicList, setTopicList] = useState([
+        {
+            topicName: 'iot2050/greengrass/command/pause_looping',
+            messageList: ['message 1', 'message 2']
+        }
+    ]);
 
-    function subscribeToTopic(topicName) {
+    function subscribeToTopic(subscribeToTopicName) {
         setTopicList([
             ...topicList,
-            topicName
+            {
+                topicName: subscribeToTopicName,
+                messageList: []
+            }
         ]);
-        console.log(topicList);
     }
 
-    function unsubscribeFromTopic(topicName) {
-        setTopicList(topicList.filter(t => {
-            console.log(t);
-            console.log(typeof t);
-            console.log(topicName);
-            console.log(typeof topicName);
-            console.log(t !== topicName);
-            return t.toString() !== topicName.toString();
-        }));
-        console.log(topicList);
+    function unsubscribeFromTopic(unsubscribeFromTopicName) {
+        setTopicList(topicList.filter(t => t.topicName !== unsubscribeFromTopicName.item));
     }
 
     const newSubscriptionTopicInputRef = React.useRef(null);
@@ -48,10 +47,10 @@ export default function MQTTSubscriptionTopicList() {
             <Heading level={4}>MQTT Dashboard</Heading>
             <Collection
                 items={topicList}
-                type="list"
+                type="grid"
                 direction="row"
                 gap="20px"
-                wrap="nowrap">
+                wrap="wrap">
                 {(item, index) => (
                     <Card
                         key={index}
@@ -59,7 +58,10 @@ export default function MQTTSubscriptionTopicList() {
                         maxWidth="20rem"
                         variation="outlined">
                         <Text>
-                            {item}
+                            {item.topicName}
+                        </Text>
+                        <Text>
+                            {item.messageList}
                         </Text>
                         <Button
                             onClick={() => unsubscribeFromTopic({item})}>
@@ -79,8 +81,8 @@ export default function MQTTSubscriptionTopicList() {
             <Button
                 variation="primary"
                 size="small"
-                // newSubscriptionTopicButtonRef={newSubscriptionTopicButtonRef}>
-                onClick={() => subscribeToTopic(`${newSubscriptionTopicInputRef.current.value}`)}>
+                newSubscriptionTopicButtonRef={newSubscriptionTopicButtonRef}>
+                // onClick={() => subscribeToTopic(`${newSubscriptionTopicInputRef.current.value}`)}>
                 Subscribe
             </Button>
         </Card>
