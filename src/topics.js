@@ -57,11 +57,11 @@ export default function MQTTSubscriptionTopicList() {
                         borderRadius="medium"
                         maxWidth="20rem"
                         variation="outlined">
-                        <Text>
+                        <Heading level={6}>
                             {item.topicName}
-                        </Text>
+                        </Heading>
                         <Text>
-                            {item.messageList}
+                            {item.messageList.map(message => <p>{message}</p>)}
                         </Text>
                         <Button
                             onClick={() => unsubscribeFromTopic({item})}>
@@ -82,7 +82,6 @@ export default function MQTTSubscriptionTopicList() {
                 variation="primary"
                 size="small"
                 newSubscriptionTopicButtonRef={newSubscriptionTopicButtonRef}>
-                // onClick={() => subscribeToTopic(`${newSubscriptionTopicInputRef.current.value}`)}>
                 Subscribe
             </Button>
         </Card>
