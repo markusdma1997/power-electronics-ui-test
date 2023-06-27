@@ -6,13 +6,22 @@ export default function MQTTSubscriptionTopicList() {
     const [topicList, setTopicList] = useState(['iot2050/greengrass/command/pause_looping']);
 
     function subscribeToTopic(topicName) {
-        topicList.push(topicName);
-        setTopicList(topicList);
+        setTopicList([
+            ...topicList,
+            topicName
+        ]);
         console.log(topicList);
     }
 
     function unsubscribeFromTopic(topicName) {
-        setTopicList(topicList.filter(t => t !== topicName));
+        setTopicList(topicList.filter(t => {
+            console.log(t);
+            console.log(typeof t);
+            console.log(topicName);
+            console.log(typeof topicName);
+            console.log(t !== topicName);
+            return t.toString() !== topicName.toString();
+        }));
         console.log(topicList);
     }
 
@@ -59,23 +68,21 @@ export default function MQTTSubscriptionTopicList() {
                     </Card>
                 )}
             </Collection>
-            <Flex>
-                <TextField
-                    variation="quiet"
-                    descriptiveText="Enter a new topic for subscription"
-                    placeholder="iot2050/greengrass/query/file_status"
-                    label="New topic subscription"
-                    ref={newSubscriptionTopicInputRef}
-                    errorMessage="Topic already subscribed"
-                />
-                <Button
-                    variation="primary"
-                    size="small"
-                    // newSubscriptionTopicButtonRef={newSubscriptionTopicButtonRef}>
-                    onClick={() => subscribeToTopic(`${newSubscriptionTopicInputRef.current.value}`)}>
-                    Subscribe
-                </Button>
-            </Flex>
+            <TextField
+                variation="quiet"
+                descriptiveText="Enter a new topic for subscription"
+                placeholder="iot2050/greengrass/query/file_status"
+                label="New topic subscription"
+                ref={newSubscriptionTopicInputRef}
+                errorMessage="Topic already subscribed"
+            />
+            <Button
+                variation="primary"
+                size="small"
+                // newSubscriptionTopicButtonRef={newSubscriptionTopicButtonRef}>
+                onClick={() => subscribeToTopic(`${newSubscriptionTopicInputRef.current.value}`)}>
+                Subscribe
+            </Button>
         </Card>
     )
 }
