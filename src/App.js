@@ -6,7 +6,7 @@ import {AWSIoTProvider} from '@aws-amplify/pubsub';
 import awsconfig from './aws-exports';
 import "@aws-amplify/ui-react/styles.css";
 import {
-    Card, Heading, Image, View, withAuthenticator, Button
+    Card, Heading, Image, View, withAuthenticator, Button, Flex, Text
 } from "@aws-amplify/ui-react";
 
 import GrafanaDashboardPanel from "./grafana";
@@ -47,7 +47,8 @@ async function getCognitoIdentityId() {
     let cognitoIdentityId = await Auth.currentCredentials().then((info) => {
         return info.identityId;
     });
-    console.log(cognitoIdentityId);
+    console.log('AWS cognito identity ID for current user is ' + cognitoIdentityId);
+    alert('AWS cognito identity ID for current user is ' + cognitoIdentityId);
 }
 
 const App = function ({ signOut, user }) {
@@ -62,7 +63,18 @@ const App = function ({ signOut, user }) {
               <GrafanaDashboardPanel/>
               <AWSTimestreamManagementPanel/>
               <MQTTSubscriptionTopicList/>
-              <Button onClick={signOut}>Sign out</Button>
+              <Flex>
+                  <Button
+                      onClick={getCognitoIdentityId}
+                      alignSelf="flex-end">>
+                      Retrieve AWS cognito identity ID
+                  </Button>
+                  <Button
+                      onClick={signOut}
+                      alignSelf="flex-end">
+                      Sign out
+                  </Button>
+              </Flex>
           </View>
       </headers>
   );
