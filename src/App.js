@@ -66,7 +66,7 @@ const App = function ({ signOut, user }) {
               <Flex>
                   <Button
                       onClick={getCognitoIdentityId}
-                      alignSelf="flex-end">>
+                      alignSelf="flex-end">
                       Retrieve AWS cognito identity ID
                   </Button>
                   <Button
