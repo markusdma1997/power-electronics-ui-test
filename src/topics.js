@@ -1,14 +1,73 @@
 import { useState } from 'react';
-import {Button, Card, Collection, Flex, Heading, Text, TextAreaField, TextField} from "@aws-amplify/ui-react";
+import {
+    Button,
+    Card,
+    Collection,
+    Flex,
+    Heading,
+    ScrollView,
+    Text,
+    TextAreaField,
+    TextField
+} from "@aws-amplify/ui-react";
 import * as React from "react";
+import {PubSub} from "aws-amplify";
 
 export default function MQTTSubscriptionTopicList() {
     const [topicList, setTopicList] = useState([
         {
             topicName: 'iot2050/greengrass/command/pause_looping',
-            messageList: ['message 1', 'message 2']
+            messageList: ['message 1: this is a long message to test the text wrap layout', 'message 2']
         }
     ]);
+
+    const [mqttSubscriptionError, setMQTTSubscriptionError] = React.useState({
+        mqttSubscriptionHasError: false,
+        mqttSubscriptionErrorMessage: ''
+    });
+
+    async function validateAndInitiateMQTTSubscription(subscribeToTopicName) {
+        // Initialize mqtt subscription topic error state
+        setMQTTSubscriptionError({
+            mqttSubscriptionHasError: false,
+            mqttSubscriptionErrorMessage: ''
+        });
+        let topicIsValid = true;
+
+        // Iterate through existing mqtt topic lists and check for validation
+        topicList.forEach((topic, index) => {
+            if (topic.topicName === subscribeToTopicName) {
+                setMQTTSubscriptionError({
+                    mqttSubscriptionHasError: true,
+                    mqttSubscriptionErrorMessage: 'Topic ' + topic.topicName + ' has already been subscribed'
+                })
+                topicIsValid = false;
+            }
+        })
+
+        if (topicIsValid) {
+            subscribeToTopic(subscribeToTopicName);
+        }
+
+        // Subscribe to new topic name
+        /*
+        PubSub.subscribe(subscribeToTopicName).subscribe({
+            next: data => {
+                console.log('Message received ', data);
+                setTopicList(topicList.map());
+            },
+            error: error => {
+                console.error(error);
+                setMQTTSubscriptionError({
+                    mqttSubscriptionHasError: true,
+                    mqttSubscriptionErrorMessage: error.toString()
+                });
+            },
+            complete: () => console.log('topic unsubscribed')
+        });
+
+         */
+    }
 
     function subscribeToTopic(subscribeToTopicName) {
         setTopicList([
@@ -18,6 +77,13 @@ export default function MQTTSubscriptionTopicList() {
                 messageList: []
             }
         ]);
+        /*
+        PubSub.subscribe(subscribeToTopicName).subscribe({
+            next: data => console.log('Received subscription request', data),
+            error: error => console.error(error),
+            complete: () => console.log('Done')
+        })
+        */
     }
 
     function unsubscribeFromTopic(unsubscribeFromTopicName) {
@@ -28,7 +94,8 @@ export default function MQTTSubscriptionTopicList() {
     const newSubscriptionTopicButtonRef = React.useRef(null);
     const newSubscriptionTopicOnClick = React.useCallback(() => {
         newSubscriptionTopicInputRef.current.focus();
-        subscribeToTopic(`${newSubscriptionTopicInputRef.current.value}`)
+        subscribeToTopic(`${newSubscriptionTopicInputRef.current.value}`);
+        console.log(topicList);
     }, [])
 
     React.useEffect(() => {
@@ -47,44 +114,59 @@ export default function MQTTSubscriptionTopicList() {
             <Heading level={4}>MQTT Dashboard</Heading>
             <Collection
                 items={topicList}
-                type="grid"
+                type="list"
                 direction="row"
+                templateColumns="1fr 1fr 1fr"
                 gap="20px"
+                alignItems="flex-start"
                 wrap="wrap">
                 {(item, index) => (
-                    <Card
-                        key={index}
-                        borderRadius="medium"
-                        maxWidth="20rem"
-                        wrap="wrap"
-                        variation="outlined">
-                        <Heading level={6} >
-                            {item.topicName}
-                        </Heading>
-                        <Text>
-                            {item.messageList.map(message => <p>{message}</p>)}
-                        </Text>
-                        <Button
-                            onClick={() => unsubscribeFromTopic({item})}>
-                            Unsubscribe
-                        </Button>
-                    </Card>
+                    <Flex
+                        wrap="wrap">
+                        <Card
+                            key={index}
+                            borderRadius="medium"
+                            width="24rem"
+                            wrap="wrap"
+                            variation="outlined">
+                            <Heading level={6} overflow="scroll">
+                                {item.topicName}
+                            </Heading>
+                            <ScrollView width="100%" height="200px">
+                                {item.messageList.map(message => <p>{message}</p>)}
+                            </ScrollView>
+                            <Button
+                                onClick={() => unsubscribeFromTopic({item})}>
+                                Unsubscribe
+                            </Button>
+                        </Card>
+                    </Flex>
                 )}
             </Collection>
-            <TextField
-                variation="quiet"
-                descriptiveText="Enter a new topic for subscription"
-                placeholder="iot2050/greengrass/query/file_status"
-                label="New topic subscription"
-                ref={newSubscriptionTopicInputRef}
-                errorMessage="Topic already subscribed"
-            />
-            <Button
-                variation="primary"
-                // newSubscriptionTopicButtonRef={newSubscriptionTopicButtonRef}>
-                onClick={() => subscribeToTopic(`${newSubscriptionTopicInputRef.current.value}`)}>
-                Subscribe
-            </Button>
+            <Card>
+                <Flex
+                    justifyContent="center"
+                >
+                    <TextField
+                        variation="quiet"
+                        descriptiveText="Enter a new topic for subscription"
+                        label="New topic subscription"
+                        alignItems="center"
+                        ref={newSubscriptionTopicInputRef}
+                        hasError={mqttSubscriptionError.mqttSubscriptionHasError}
+                        errorMessage={mqttSubscriptionError.mqttSubscriptionErrorMessage}
+                    />
+                    <Button
+                        variation="primary"
+                        type="submit"
+                        height="3rem"
+                        alignSelf="flex-end"
+                        // ref={newSubscriptionTopicButtonRef}
+                        onClick={() => validateAndInitiateMQTTSubscription(`${newSubscriptionTopicInputRef.current.value}`)}>
+                        Subscribe
+                    </Button>
+                </Flex>
+            </Card>
         </Card>
     )
 }

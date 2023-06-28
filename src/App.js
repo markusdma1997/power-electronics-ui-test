@@ -1,23 +1,16 @@
 import * as React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {Amplify, Auth, PubSub} from 'aws-amplify';
+import {Amplify, Auth} from 'aws-amplify';
 import {AWSIoTProvider} from '@aws-amplify/pubsub';
 import awsconfig from './aws-exports';
 import "@aws-amplify/ui-react/styles.css";
 import {
-    Card,
-    Heading,
-    Image,
-    View,
-    Text,
-    withAuthenticator,
-    Collection,
-    TextField,
-    Flex,
-    Button,
+    Card, Heading, Image, View, withAuthenticator, Button
 } from "@aws-amplify/ui-react";
 
+import GrafanaDashboardPanel from "./grafana";
+import AWSTimestreamManagementPanel from "./timestream";
 import MQTTSubscriptionTopicList from "./topics";
 
 Amplify.configure(awsconfig);
@@ -57,14 +50,6 @@ async function getCognitoIdentityId() {
     console.log(cognitoIdentityId);
 }
 
-async function pubsubCreateSubscription(topic) {
-    PubSub.subscribe(topic).subscribe({
-        next: data => console.log('Message received ', data),
-        error: error => console.log(error),
-        complete: () => console.log('Subscription done')
-    });
-}
-
 const App = function ({ signOut, user }) {
   return (
       <headers>
@@ -74,16 +59,8 @@ const App = function ({ signOut, user }) {
                   <Image alt="logo" src={logo} height="10%" width="10%"/>
                   <Heading level={1}>Power Electronics IoT2050 Dashboard</Heading>
               </Card>
-              <Card>
-                  <Heading level={4}>Triangular Wave from RTBox simulation</Heading>
-                  <iframe
-                      title="IoT2050 UDP"
-                      src="http://localhost:3000/d-solo/e9c0307e-2873-4cc4-9a74-1347e5bee177/powerelectronics?orgId=1&refresh=5s&from=1687517021785&to=1687517321786&panelId=2"
-                      width="450"
-                      height="200"
-                      frameBorder="0">
-                  </iframe>
-              </Card>
+              <GrafanaDashboardPanel/>
+              <AWSTimestreamManagementPanel/>
               <MQTTSubscriptionTopicList/>
               <Button onClick={signOut}>Sign out</Button>
           </View>
