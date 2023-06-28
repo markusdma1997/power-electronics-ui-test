@@ -4,14 +4,9 @@ import {useState} from "react";
 
 import { TimestreamQueryClient, QueryCommand } from "@aws-sdk/client-timestream-query";
 import { TimestreamWriteClient, ListDatabasesCommand, ListTablesCommand } from "@aws-sdk/client-timestream-write";
-import { fromCognitoIdentityPool } from '@aws-sdk/credential-providers';
 
 const writeClient = new TimestreamWriteClient({
-    region: "eu-west-1",
-    credentials: fromCognitoIdentityPool({
-        identityPoolId: 'eu-west-1:b1b1fe47-9c20-4110-865e-bb6309e92d25',
-        clientConfig: {region: 'eu-west-1'}
-    })
+    region: "eu-west-1"
 });
 
 export default function AWSTimestreamManagementPanel() {
