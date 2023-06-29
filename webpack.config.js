@@ -39,7 +39,7 @@ const config = {
   },
   resolve: {
     extensions: [".tsx", ".ts", ".jsx", ".js", "..."],
-    fallback: { "os": false }
+    fallback: { "os": require.resolve("os-browserify/browser") }
   },
 };
 
