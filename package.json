@@ -40,12 +40,6 @@
       "react-app/jest"
     ]
   },
-  "browser": {
-    "crypto": false,
-    "fs": false,
-    "path": false,
-    "os": false
-  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -67,5 +61,11 @@
     "webpack": "^5.88.1",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"
+  },
+  "browser": {
+    "crypto": false,
+    "fs": false,
+    "path": false,
+    "os": false
   }
 }
