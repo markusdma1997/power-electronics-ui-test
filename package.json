@@ -40,6 +40,12 @@
       "react-app/jest"
     ]
   },
+  "browser": {
+    "crypto": false,
+    "fs": false,
+    "path": false,
+    "os": false
+  },
   "browserslist": {
     "production": [
       ">0.2%",
