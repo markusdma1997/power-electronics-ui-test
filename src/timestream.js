@@ -88,6 +88,15 @@ export default function AWSTimestreamManagementPanel() {
                     </Flex>
                 )}
             </Collection>
+            <Button
+                variation="primary"
+                type="submit"
+                height="3rem"
+                alignSelf="flex-end"
+                // ref={newSubscriptionTopicButtonRef}
+                onClick={() => refreshTimestreamDatabaseList()}>
+                Refresh
+            </Button>
             <Card>
                 <Flex
                     justifyContent="center"
@@ -98,15 +107,6 @@ export default function AWSTimestreamManagementPanel() {
                         label="Timestream query"
                         alignItems="center"
                     />
-                    <Button
-                        variation="primary"
-                        type="submit"
-                        height="3rem"
-                        alignSelf="flex-end"
-                        // ref={newSubscriptionTopicButtonRef}
-                        onClick={() => refreshTimestreamDatabaseList()}>
-                        Refresh
-                    </Button>
                 </Flex>
             </Card>
         </Card>
