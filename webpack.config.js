@@ -49,8 +49,11 @@ const config = {
       "os": false,
       // "crypto": false,
       "path": false,
-      "fs": false
+      // "fs": false
      },
+    node: {
+      fs: "empty"
+    }
   },
 };
 
