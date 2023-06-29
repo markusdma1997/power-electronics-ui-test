@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@aws-amplify/pubsub": "^5.3.3",
     "@aws-amplify/ui-react": "^5.0.2",
     "@aws-sdk/client-sts": "^3.362.0",
     "@aws-sdk/client-timestream-query": "^3.360.0",
