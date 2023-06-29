@@ -17,6 +17,7 @@
     "crypto": "^1.0.1",
     "crypto-browserify": "^3.12.0",
     "eslint": "^8.43.0",
+    "fs": "^0.0.1-security",
     "node-polyfill-webpack-plugin": "^2.0.1",
     "os": "^0.1.2",
     "os-browserify": "^0.3.0",
