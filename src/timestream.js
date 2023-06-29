@@ -6,8 +6,7 @@ import { TimestreamQueryClient, QueryCommand } from "@aws-sdk/client-timestream-
 import { TimestreamWriteClient, ListDatabasesCommand, ListTablesCommand } from "@aws-sdk/client-timestream-write";
 
 const writeClient = new TimestreamWriteClient({
-    region: "eu-west-1",
-    credentials: new Credential()
+    region: "eu-west-1"
 });
 
 export default function AWSTimestreamManagementPanel() {
