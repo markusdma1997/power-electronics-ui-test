@@ -67,5 +67,8 @@
     "crypto": false,
     "fs": false,
     "path": false
+  },
+  "resolutions": {
+    "webpack": "5.88.0"
   }
 }
