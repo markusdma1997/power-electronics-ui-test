@@ -39,10 +39,7 @@ const config = {
     ],
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".jsx", ".js", "..."],
-    fallback: {
-      os: false
-    }
+    extensions: [".tsx", ".ts", ".jsx", ".js", "..."]
   },
 };
 
