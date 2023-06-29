@@ -4,6 +4,8 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const isProduction = process.env.NODE_ENV == "production";
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
+
 
 const config = {
   entry: "./src/index.ts",
@@ -17,7 +19,8 @@ const config = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "index.html",
-    })
+    }),
+    new NodePolyfillPlugin()
     // Add your plugins here
     // Learn more about plugins from https://webpack.js.org/configuration/plugins/
   ],
