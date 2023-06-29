@@ -44,10 +44,10 @@ const config = {
     extensions: [".tsx", ".ts", ".jsx", ".js", "..."],
     fallback: {
       // "os": require.resolve("os-browserify/browser"),
-      // "crypto": require.resolve("crypto-browserify"),
+      "crypto": require.resolve("crypto-browserify"),
       // "path": require.resolve("path-browserify"),
       "os": false,
-      "crypto": false,
+      // "crypto": false,
       "path": false,
       "fs": false
      },
