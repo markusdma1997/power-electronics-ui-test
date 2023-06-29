@@ -4,8 +4,10 @@
   "private": true,
   "dependencies": {
     "@aws-amplify/ui-react": "^5.0.2",
+    "@aws-sdk/client-sts": "^3.362.0",
     "@aws-sdk/client-timestream-query": "^3.360.0",
     "@aws-sdk/client-timestream-write": "^3.360.0",
+    "@aws-sdk/credential-provider-node": "^3.362.0",
     "@aws-sdk/credential-providers": "^3.360.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
