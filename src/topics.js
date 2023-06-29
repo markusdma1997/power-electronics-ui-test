@@ -6,7 +6,6 @@ import {
     Flex,
     Heading,
     ScrollView,
-    Text,
     TextAreaField,
     TextField
 } from "@aws-amplify/ui-react";
