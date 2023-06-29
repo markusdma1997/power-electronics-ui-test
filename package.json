@@ -63,9 +63,9 @@
     "webpack-dev-server": "^4.15.1"
   },
   "browser": {
+    "os": false,
     "crypto": false,
     "fs": false,
-    "path": false,
-    "os": false
+    "path": false
   }
 }
