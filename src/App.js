@@ -6,7 +6,7 @@ import {AWSIoTProvider} from '@aws-amplify/pubsub';
 import awsconfig from './aws-exports';
 import "@aws-amplify/ui-react/styles.css";
 import {
-    Card, Heading, Image, View, withAuthenticator, Button, Flex, Text
+    Card, Heading, Image, View, withAuthenticator, Button, Flex
 } from "@aws-amplify/ui-react";
 
 import GrafanaDashboardPanel from "./grafana";
