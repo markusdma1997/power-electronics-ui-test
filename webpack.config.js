@@ -45,8 +45,8 @@ const config = {
     fallback: {
       "os": require.resolve("os-browserify/browser"),
       "crypto": require.resolve("crypto-browserify"),
-      "path": require.resolve("path-browserify")
-      // "os": false
+      "path": require.resolve("path-browserify"),
+      "fs": false
      },
   },
 };
