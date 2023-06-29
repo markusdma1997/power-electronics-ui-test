@@ -1,4 +1,4 @@
-import {Button, Card, Collection, Flex, Heading, ScrollView, Text} from "@aws-amplify/ui-react";
+import {Button, Card, Collection, Flex, Heading, ScrollView, Text, TextField} from "@aws-amplify/ui-react";
 import * as React from "react";
 import {useState} from "react";
 
@@ -60,45 +60,44 @@ export default function AWSTimestreamManagementPanel() {
 
     return (
         <Card>
-            <Heading level={4}>AWS Timestream Management</Heading>
-            <Flex>
-                <Card>
-                    <Card>
-                        <Heading level={5}>Submit a query to execute on a regular base</Heading>
-                    </Card>
-                    <Card>
-                        <Heading>Query result</Heading>
-                    </Card>
-                </Card>
-                <Card>
-                    <Heading level={5}>AWS Timestream Databases</Heading>
-                    <Collection
-                        items={timestreamDatabaseList}
-                        type="list"
-                        direction="row"
-                        templateColumns="1fr 1fr 1fr"
-                        gap="20px"
-                        alignItems="flex-start"
+            <Heading level={4}>AWS Timestream Databases</Heading>
+            <Collection
+                items={timestreamDatabaseList}
+                type="list"
+                direction="row"
+                templateColumns="1fr 1fr 1fr"
+                gap="20px"
+                alignItems="flex-start"
+                wrap="wrap">
+                {(item, index) => (
+                    <Flex
                         wrap="wrap">
-                        {(item, index) => (
-                            <Flex
-                                wrap="wrap">
-                                <Card
-                                    key={index}
-                                    borderRadius="medium"
-                                    width="24rem"
-                                    wrap="wrap"
-                                    variation="outlined">
-                                    <Heading level={6} overflow="scroll">
-                                        {item.databaseName}
-                                    </Heading>
-                                    <ScrollView width="100%" height="200px">
-                                        {item.tableList.map(table => <p>{table}</p>)}
-                                    </ScrollView>
-                                </Card>
-                            </Flex>
-                        )}
-                    </Collection>
+                        <Card
+                            key={index}
+                            borderRadius="medium"
+                            width="24rem"
+                            wrap="wrap"
+                            variation="outlined">
+                            <Heading level={6} overflow="scroll">
+                                {item.databaseName}
+                            </Heading>
+                            <ScrollView width="100%" height="200px">
+                                {item.tableList.map(table => <p>{table}</p>)}
+                            </ScrollView>
+                        </Card>
+                    </Flex>
+                )}
+            </Collection>
+            <Card>
+                <Flex
+                    justifyContent="center"
+                >
+                    <TextField
+                        variation="quiet"
+                        descriptiveText="Submit a query to execute on AWS Timestream"
+                        label="Timestream query"
+                        alignItems="center"
+                    />
                     <Button
                         variation="primary"
                         type="submit"
@@ -108,8 +107,8 @@ export default function AWSTimestreamManagementPanel() {
                         onClick={() => refreshTimestreamDatabaseList()}>
                         Refresh
                     </Button>
-                </Card>
-            </Flex>
+                </Flex>
+            </Card>
         </Card>
     )
 }

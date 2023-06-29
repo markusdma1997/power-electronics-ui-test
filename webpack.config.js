@@ -5,8 +5,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const isProduction = process.env.NODE_ENV == "production";
 
-const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
-
 const config = {
   entry: "./src/index.ts",
   output: {
@@ -19,8 +17,7 @@ const config = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "index.html",
-    }),
-    new NodePolyfillPlugin()
+    })
     // Add your plugins here
     // Learn more about plugins from https://webpack.js.org/configuration/plugins/
   ],
@@ -41,7 +38,8 @@ const config = {
     ],
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".jsx", ".js", "..."]
+    extensions: [".tsx", ".ts", ".jsx", ".js", "..."],
+    fallback: { "os": false }
   },
 };
 
