@@ -6,7 +6,8 @@ import { TimestreamQueryClient, QueryCommand } from "@aws-sdk/client-timestream-
 import { TimestreamWriteClient, ListDatabasesCommand, ListTablesCommand } from "@aws-sdk/client-timestream-write";
 
 const writeClient = new TimestreamWriteClient({
-    region: "eu-west-1"
+    region: "eu-west-1",
+    credentials: new Credential()
 });
 
 export default function AWSTimestreamManagementPanel() {
@@ -43,11 +44,11 @@ export default function AWSTimestreamManagementPanel() {
                         }
                     ])
                 } catch (error) {
-                    console.log("Error while listing tables, ", error);
+                    console.log("Error while listing tables,", error);
                 }
             }
         } catch (error) {
-            console.log("Error while listing databases, ", error);
+            console.log("Error while listing databases,", error);
         }
     }
 
@@ -96,7 +97,7 @@ export default function AWSTimestreamManagementPanel() {
                 </Card>
                 <Card>
                     <Card>
-                        <Heading>Submit a query to execute on a regular base</Heading>
+                        <Heading level={5}>Submit a query to execute on a regular base</Heading>
                     </Card>
                     <Card>
                         <Heading>Query result</Heading>
