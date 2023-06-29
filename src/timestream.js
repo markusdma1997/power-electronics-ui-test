@@ -63,6 +63,14 @@ export default function AWSTimestreamManagementPanel() {
             <Heading level={4}>AWS Timestream Management</Heading>
             <Flex>
                 <Card>
+                    <Card>
+                        <Heading level={5}>Submit a query to execute on a regular base</Heading>
+                    </Card>
+                    <Card>
+                        <Heading>Query result</Heading>
+                    </Card>
+                </Card>
+                <Card>
                     <Heading level={5}>AWS Timestream Databases</Heading>
                     <Collection
                         items={timestreamDatabaseList}
@@ -100,14 +108,6 @@ export default function AWSTimestreamManagementPanel() {
                         onClick={() => refreshTimestreamDatabaseList()}>
                         Refresh
                     </Button>
-                </Card>
-                <Card>
-                    <Card>
-                        <Heading level={5}>Submit a query to execute on a regular base</Heading>
-                    </Card>
-                    <Card>
-                        <Heading>Query result</Heading>
-                    </Card>
                 </Card>
             </Flex>
         </Card>
