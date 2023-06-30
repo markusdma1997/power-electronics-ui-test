@@ -9,7 +9,8 @@ module.exports = function override (config, env) {
         "path": require.resolve("path-browserify"),
         "crypto": require.resolve("crypto-browserify"),
         "os": require.resolve("os-browserify/browser"),
-        "http": require.resolve("stream-http")
+        "http": require.resolve("stream-http"),
+        "util": require.resolve("util/")
     }
 
     return config
