@@ -15,6 +15,9 @@ module.exports = function override (config, env) {
         "stream": require.resolve("stream-browserify"),
         "util": require.resolve("util/")
     }
+    loaders.alias = {
+        "os": "os-browserify/browser",
+    }
 
     config.plugins = [
         ...config.plugins,
