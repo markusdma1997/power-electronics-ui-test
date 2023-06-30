@@ -2,7 +2,6 @@
 const webpack = require('webpack');
 const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 
-
 module.exports = function override (config, env) {
     console.log('override')
     let loaders = config.resolve
@@ -19,7 +18,12 @@ module.exports = function override (config, env) {
 
     config.plugins = [
         ...config.plugins,
-        new NodePolyfillPlugin()
+        new webpack.ProvidePlugin({
+            process: "process/browser.js",
+        }),
+        new NodePolyfillPlugin({
+            excludeAliases: ['console'],
+        }),
     ]
 
     return config
