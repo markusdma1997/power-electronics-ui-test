@@ -3,11 +3,13 @@ const webpack = require('webpack');
 const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 
 module.exports = function override (config, env) {
-    config.node= {
+    config.target = "node";
+
+    config.node = {
         global: true
     };
 
-    config.output= {
+    config.output = {
         libraryTarget: 'umd' // Fix: "Uncaught ReferenceError: exports is not defined".
     }
 
