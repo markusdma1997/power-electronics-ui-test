@@ -1,23 +1,27 @@
 import {Button, Card, Collection, Flex, Heading, ScrollView, Text, TextField} from "@aws-amplify/ui-react";
 import * as React from "react";
-import {useState} from "react";
+import { useState } from "react";
+import { Amplify, API } from 'aws-amplify';
+import awsconfig from './aws-exports';
 
 import { TimestreamQueryClient, QueryCommand } from "@aws-sdk/client-timestream-query";
 import { TimestreamWriteClient, ListDatabasesCommand, ListTablesCommand } from "@aws-sdk/client-timestream-write";
- import { defaultProvider } from "@aws-sdk/credential-provider-node";
- import { getDefaultRoleAssumerWithWebIdentity } from "@aws-sdk/client-sts";
+// import { defaultProvider } from "@aws-sdk/credential-provider-node";
+// import { getDefaultRoleAssumerWithWebIdentity } from "@aws-sdk/client-sts";
 
- const credentialProvider = defaultProvider({
-     roleAssumerWithWebIdentity: getDefaultRoleAssumerWithWebIdentity()
- });
+//const credentialProvider = defaultProvider({
+//    roleAssumerWithWebIdentity: getDefaultRoleAssumerWithWebIdentity()
+// });
 
-const writeClient = new TimestreamWriteClient({
-    region: "eu-west-1",
-    credentialDefaultProvider: credentialProvider
+// const writeClient = new TimestreamWriteClient({
+//    region: "eu-west-1",
+//    credentialDefaultProvider: credentialProvider
     // credentialDefaultProvider: 'eu-west-1_brHJt8g9C'
-});
+//});
 
 export default function AWSTimestreamManagementPanel() {
+    Amplify.configure(awsconfig);
+
     const [timestreamDatabaseList, setTimestreamDatabaseList] = useState([
         {
             databaseName: '',
@@ -25,6 +29,24 @@ export default function AWSTimestreamManagementPanel() {
         }
     ]);
 
+    const apiName = 'powerelectronicsuitest-timestream-management-API'
+    const path = 'https://ki6univp1i.execute-api.eu-west-1.amazonaws.com/default/powerelectronicsuitest-timestream-management'
+    const myInit = {
+        headers: {},
+        response: true
+    }
+
+    async function refreshTimestreamDatabaseList() {
+        API.get(apiName, path, myInit)
+            .then((response) => {
+                console.log(response);
+            })
+            .catch(((error) => {
+                console.log(error.response);
+            }))
+    }
+
+    /*
     async function refreshTimestreamDatabaseList() {
         const listDatabaseParams = {
             MaxResults: 50
@@ -58,6 +80,7 @@ export default function AWSTimestreamManagementPanel() {
             console.log("Error while listing databases,", error);
         }
     }
+     */
 
     return (
         <Card>
