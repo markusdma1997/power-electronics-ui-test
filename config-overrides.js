@@ -9,12 +9,12 @@ module.exports = function override (config, env) {
         global: true
     };
 
-    config.output = {
-        libraryTarget: 'umd' // Fix: "Uncaught ReferenceError: exports is not defined".
-    }
+    // config.output = {
+    //     libraryTarget: 'umd'  Fix: "Uncaught ReferenceError: exports is not defined".
+    // 
 
-    console.log('override')
-    let loaders = config.resolve
+    console.log('override');
+    let loaders = config.resolve;
     loaders.fallback = {
         // "fs": false,
         "child_process": false,
@@ -24,10 +24,10 @@ module.exports = function override (config, env) {
         "http": require.resolve("stream-http"),
         "stream": require.resolve("stream-browserify"),
         "util": require.resolve("util/")
-    }
+    };
     loaders.alias = {
         "os": "os-browserify/browser",
-    }
+    };
 
     config.plugins = [
         ...config.plugins,
@@ -37,7 +37,7 @@ module.exports = function override (config, env) {
         new NodePolyfillPlugin({
             excludeAliases: ['console'],
         }),
-    ]
+    ];
 
-    return config
+    return config;
 }
