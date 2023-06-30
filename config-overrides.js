@@ -4,8 +4,7 @@ const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 
 module.exports = function override (config, env) {
     config.node= {
-        global: true,
-        fs: 'empty'
+        global: true
     };
 
     config.output= {
