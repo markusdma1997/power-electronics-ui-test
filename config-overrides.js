@@ -1,5 +1,8 @@
 /* config-overrides.js */
 const webpack = require('webpack');
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
+
+
 module.exports = function override (config, env) {
     console.log('override')
     let loaders = config.resolve
@@ -13,6 +16,11 @@ module.exports = function override (config, env) {
         "stream": require.resolve("stream-browserify"),
         "util": require.resolve("util/")
     }
+
+    config.plugins = [
+        ...config.plugins,
+        new NodePolyfillPlugin()
+    ]
 
     return config
 }
