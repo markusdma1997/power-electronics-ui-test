@@ -1,15 +1,13 @@
 /* config-overrides.js */
 const webpack = require('webpack');
-module.exports = function override(config, env) {
-    config.resolve.fallback = {
-        crypto: require.resolve('crypto-browserify'),
-    };
-    config.plugins.push(
-        new webpack.ProvidePlugin({
-            process: 'process/browser',
-            Buffer: ['buffer', 'Buffer'],
-        }),
-    );
+module.exports = function override (config, env) {
+    console.log('override')
+    let loaders = config.resolve
+    loaders.fallback = {
+        "fs": false,
+        "path": require.resolve("path-browserify"),
+        "crypto": require.resolve("crypto-browserify")
+    }
 
-    return config;
+    return config
 }
